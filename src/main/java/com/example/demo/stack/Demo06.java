@@ -1,7 +1,12 @@
 package com.example.demo.stack;
 
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * @author jl.yao
@@ -49,20 +54,64 @@ public class Demo06 {
 
     class StackOfPlates {
 
+        private List<Stack<Integer>> list;
+        private int cap;
+
+
+
         public StackOfPlates(int cap) {
+            list = new ArrayList<>();
+            this.cap= cap;
 
         }
 
         public void push(int val) {
-
+            if (cap <= 0 ){
+                return;
+            }
+            if (list.isEmpty()){
+                //如果当前没有栈 新建栈
+                list.add(new Stack<Integer>());
+            }
+            //如果当前最近的栈满，则需要新建栈
+            if (list.get(list.size()-1).size() >= cap){
+                list.add(new Stack<>());
+            }
+            //再取最近的栈push
+            Stack<Integer> stack = list.get(list.size() - 1);
+            stack.push(val);
         }
 
-        public int pop() {
-            return 0;
+        public int pop(){
+            // 如果当前没有栈
+            if (list.isEmpty()) {
+                return -1;
+            }
+            // 弹出
+            Stack<Integer> stack = list.get(list.size() - 1);
+            int val = stack.pop();
+            // 如果栈空则要删除栈
+            if (stack.isEmpty()) {
+                list.remove(list.size() - 1);
+            }
+            return val;
         }
+
 
         public int popAt(int index) {
-            return 0;
+            // 如果索引不在栈表内
+            if(list.size() <= 0 || index > list.size() - 1) {
+                return  -1;
+            }
+            // 弹出
+            Stack<Integer> stack = list.get(index);
+            Integer pop = stack.pop();
+            // 若为空栈则删除
+            if(stack.isEmpty()) {
+                this.list.remove(index);
+            }
+            return pop;
+
         }
     }
 
