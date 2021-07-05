@@ -3,117 +3,209 @@ package com.example.demo.sort;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-import java.util.Random;
+import java.util.Arrays;
 
-*
+/**
  * @Auther: yjl
- * @Date: 2021/7/1 21:52
+ * @Date: 2021/7/5 21:05
  * @since: jdk1.8
- * @Description: 早餐组合
-
-
+ * @Description: 合并两个有序数组
+ */
 @Slf4j
 public class Demo01 {
 
 
-*
-     * 需求：
-     * 小扣在秋日市集选择了一家早餐摊位，一维整型数组 staple 中记录了每种主食的价格，
-     * 一维整型数组 drinks 中记录了每种饮料的价格。小扣的计划选择一份主食和一款饮料，且花费不超过 x 元。请返回小扣共有多少种购买方案。
+    /**
+     * 需求：给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中，使 nums1 成为一个有序数组。
      *
-     * 注意：答案需要以 1e9 + 7 (1000000007) 为底取模，如：计算初始结果为：1000000008，请返回 1
+     * 初始化 nums1 和 nums2 的元素数量分别为 m 和 n 。你可以假设 nums1 的空间大小等于 m + n，这样它就有足够的空间保存来自 nums2 的元素。
+     *
+     *  
      *
      * 示例 1：
      *
-     * 输入：staple = [10,20,5], drinks = [5,5,2], x = 15
-     *
-     * 输出：6
-     *
-     * 解释：小扣有 6 种购买方案，所选主食与所选饮料在数组中对应的下标分别是：
-     * 第 1 种方案：staple[0] + drinks[0] = 10 + 5 = 15；
-     * 第 2 种方案：staple[0] + drinks[1] = 10 + 5 = 15；
-     * 第 3 种方案：staple[0] + drinks[2] = 10 + 2 = 12；
-     * 第 4 种方案：staple[2] + drinks[0] = 5 + 5 = 10；
-     * 第 5 种方案：staple[2] + drinks[1] = 5 + 5 = 10；
-     * 第 6 种方案：staple[2] + drinks[2] = 5 + 2 = 7。
-     *
+     * 输入：nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+     * 输出：[1,2,2,3,5,6]
      * 示例 2：
      *
-     * 输入：staple = [2,1,1], drinks = [8,9,5,1], x = 9
-     *
-     * 输出：8
-     *
-     * 解释：小扣有 8 种购买方案，所选主食与所选饮料在数组中对应的下标分别是：
-     * 第 1 种方案：staple[0] + drinks[2] = 2 + 5 = 7；
-     * 第 2 种方案：staple[0] + drinks[3] = 2 + 1 = 3；
-     * 第 3 种方案：staple[1] + drinks[0] = 1 + 8 = 9；
-     * 第 4 种方案：staple[1] + drinks[2] = 1 + 5 = 6；
-     * 第 5 种方案：staple[1] + drinks[3] = 1 + 1 = 2；
-     * 第 6 种方案：staple[2] + drinks[0] = 1 + 8 = 9；
-     * 第 7 种方案：staple[2] + drinks[2] = 1 + 5 = 6；
-     * 第 8 种方案：staple[2] + drinks[3] = 1 + 1 = 2；
+     * 输入：nums1 = [1], m = 1, nums2 = [], n = 0
+     * 输出：[1]
+     *  
      *
      * 提示：
      *
-     * 1 <= staple.length <= 10^5
-     * 1 <= drinks.length <= 10^5
-     * 1 <= staple[i],drinks[i] <= 10^5
-     * 1 <= x <= 2*10^5
-     *
-
+     * nums1.length == m + n
+     * nums2.length == n
+     * 0 <= m, n <= 200
+     * 1 <= m + n <= 200
+     * -109 <= nums1[i], nums2[i] <= 109
+     */
 
 
     @Test
     public void test(){
 
-    }
-
-
-    //方法一 先排序
-    public int breakfastNumber(int[] staple, int[] drinks, int x) {
-        if (staple.length ==0){
-
+        int[] arr = {6,5,4,0,0,0};
+        int[] arr2 = {3,2,1};
+//        int[] bubble = insertDesc(arr);
+        int[] bubble = ReverseDoublePoint(arr,3,arr2,3);
+        for (int i : bubble) {
+            System.out.print(i);
         }
-        quickSort(staple,0,staple.length-1);
-        quickSort(drinks,0,drinks.length-1);
-
-
-
     }
-
-    public static void quickSort(int[] arr,int left ,int right ){
-        if (left < right ){
-            swap(arr,left+(int)(Math.random() *(right-left+1)),right);
-            int[] p = partition(arr,left,right);
-            quickSort(arr,left,p[0]-1);
-            quickSort(arr,p[1]+1,right);
+//    方法一 利用Arrays数组排序
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        for (int i = 0; i<n ; i++) {
+            nums1[m+i] =nums2[i];
         }
+        Arrays.sort(nums1);
+
 
     }
 
-    public static void swap(int[] arr,int left ,int right){
-        int tmp = arr[left];
-        arr[left] = arr[right];
-        arr[right] = tmp;
-    }
+    //    方法二 冒泡排序
+    public int[] bubble(int[] arr) {
 
-    public static int[] partition(int[] arr,int left ,int right){
-        //<区右边界
-        int less = left-1;
-        // >区 左边界
-        int more = right;
-        while (left < more){
-            if (arr[left] < arr[right]){
-                swap(arr,++less,left++);
-            }else if (arr[left] > arr[right]){
-                swap(arr,--more,left);
-            }else {
-                left++;
+        //n-1轮遍历
+        for (int i = 1; i < arr.length; i++) {
+
+            for (int j = 0; j <arr.length-i ; j++) {
+                if (arr[j] > arr[j+1]){
+                    swap(arr,j,j+1);
+                }
             }
         }
-        swap(arr,more,right);
-        return new int[]{less+1,more};
+        return arr;
     }
 
+    //    方法三 选择排序选择最小的
+    public int[] choiceMin(int[] arr) {
+
+        //n-1轮遍历
+        for (int i = 0; i < arr.length-1; i++) {
+            int min = i;
+            for (int j = i + 1; j <arr.length ; j++) {
+                if (arr[j] < arr[min]){
+                    min = j;
+                }
+
+            }
+            if (i!=min){
+                swap(arr,i,min);
+            }
+        }
+        return arr;
+    }
+
+    //    方法三 选择排序 选择最大的
+    public int[] choiceMax(int[] arr) {
+
+        //n-1轮遍历
+        for (int i = arr.length-1; i>=0; i--) {
+            int max = i;
+            for (int j = 0; j < i ; j++) {
+                if (arr[j] > arr[max]){
+                    max = j;
+                }
+
+            }
+            if (i!=max){
+                swap(arr,i,max);
+            }
+        }
+        return arr;
+    }
+
+    //方法四 插入排序(正序)
+    public int[] insertAsc(int[] arr) {
+        for (int i = 0; i < arr.length ; i++) {
+            //当前为带插入数
+            int tmp = arr[i];
+            int j = i;
+
+            //从右至左找到需要插入的点，小于就交换数据，索引-- 一次对比
+            while (j > 0 && tmp < arr[j-1]){
+                //交换
+                arr[j] = arr[j-1];
+                j--;
+            }
+            //找到插入点
+            arr[j]=tmp;
+        }
+        return arr;
+    }
+
+    //方法四 插入排序(倒序)
+    public int[] insertDesc(int[] arr) {
+        for (int i = 0; i < arr.length ; i++) {
+            //当前为带插入数
+            int tmp = arr[i];
+            int j = i;
+
+            //从右至左找到需要插入的点，小于就交换数据，索引-- 一次对比
+            while (j > 0 && tmp > arr[j-1]){
+                //交换
+                arr[j] = arr[j-1];
+                j--;
+            }
+            //找到插入点
+            arr[j]=tmp;
+        }
+        return arr;
+    }
+
+
+    //方法五 双指针
+    public int[] doublePoint(int[] nums1, int m, int[] nums2, int n) {
+
+        int p1 = 0;
+        int p2 = 0;
+        int cur = 0;
+        int[] sort =new int[m+n];
+        while (p1 < m || p2< n){
+            if (p1 == m){
+                cur = nums2[p2++];
+            }else
+            if (p2 == n){
+                cur = nums1[p1++];
+            }else
+            if (nums1[p1] > nums2[p2]){
+                cur = nums2[p2++];
+            }else {
+                cur = nums1[p1++];
+            }
+
+            sort[p1 + p2 - 1] = cur;
+        }
+        for (int i = 0; i != m + n; ++i) {
+            nums1[i] = sort[i];
+        }
+        return nums1;
+    }
+
+    //方法六 逆序双指针
+    public int[] ReverseDoublePoint(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = m - 1, p2 = n - 1;
+        int tail = m + n - 1;
+        int cur;
+        while (p1 >= 0 || p2 >= 0) {
+            if (p1 == -1) {
+                cur = nums2[p2--];
+            } else if (p2 == -1) {
+                cur = nums1[p1--];
+            } else if (nums1[p1] > nums2[p2]) {
+                cur = nums1[p1--];
+            } else {
+                cur = nums2[p2--];
+            }
+            nums1[tail--] = cur;
+        }
+        return nums1;
+    }
+    public void swap(int[] arr,int l ,int f){
+        int tmp= arr[l];
+        arr[l]=arr[f];
+        arr[f]=tmp;
+    }
 
 }

@@ -3,6 +3,8 @@ package com.example.demo.sort;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * @Auther: yjl
  * @Date: 2021/7/1 22:27
@@ -60,6 +62,12 @@ public class quickSort {
         }
         swap(arr,more,right);
         return new int[]{less+1,more};
+    }
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        for (int i = 0; i<n ; i++) {
+            nums1[m+i] =nums2[i];
+        }
+        Arrays.sort(nums1);
     }
 
 }
