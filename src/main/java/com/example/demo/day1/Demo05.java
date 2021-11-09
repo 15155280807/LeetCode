@@ -1,16 +1,21 @@
-package com.example.demo;
+package com.example.demo.day1;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 /**
  * @author jl.yao
- * @className MaximalSubsequenceSum
- * @description 最大子序和
- * @date 2021/3/22 15:48
+ * @className Demo
+ * @description
+ * @date 2021/10/28 18:59
  **/
-@Slf4j
-public class MaximalSubsequenceSum {
+public class Demo05 {
+
+    @Test
+    public void test(){
+        maxSubArray(new int[]{1,3,4,5});
+    }
 
     /**
      * 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
@@ -42,34 +47,18 @@ public class MaximalSubsequenceSum {
      *
      * 提示：
      *
-     * 1 <= nums.length <= 3 * 104
-     * -105 <= nums[i] <= 105
+     * 1 <= nums.length <= 105
+     * -104 <= nums[i] <= 104
      *
+     *
+     * @return
      */
-    @Test
-    public void test(){
-
-    }
-
     public int maxSubArray(int[] nums) {
 
-        int pre = 0;
-        int max = nums[0];
-        for (int i : nums) {
-          pre = Math.max(pre +i ,i);
-          max = Math.max(max,pre);
-        }
-
-        for (int i = 0; i < nums.length-1; i++) {
-            int sum = pre +nums[i];
-            if (sum > i){
-                pre = sum;
-            }
-            if (pre > max){
-                max = pre;
-            }
-        }
-
-        return max;
+        return 0;
     }
+
+
+
+
 }
