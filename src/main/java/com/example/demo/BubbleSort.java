@@ -41,7 +41,7 @@ public class BubbleSort {
            if (flag){
                break;
            }
-           //第 i轮排序的结果为
+           //第i轮排序的结果为
            System.out.println("第"+i+"轮排序后的结果为:");
            display(array);
        }
